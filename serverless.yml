@@ -88,6 +88,16 @@ functions:
           method: delete
           cors: true
 
+  getAllIngredientsByRecipeName:
+    handler: handler.getAllIngredientsByRecipeName
+    events:
+      - http:
+          path: recipeIngredients/{name}
+          method: get
+          cors: true
+
+
+
 
 plugins:
   - serverless-offline

@@ -175,3 +175,25 @@ module.exports.deleteIngredient = (event, context, callback) => {
             })
         })
 };
+
+module.exports.getAllIngredientsByRecipeName = (event, context, callback) => {
+    context.callbackWaitsForEmptyEventLoop = false;
+
+    const sql = 'select * from ingredient where recipe_name=$1';
+    db.query(sql,event.pathParameters.name)
+        .then(res => {
+            callback(null, {
+                statusCode: 200,
+                body: JSON.stringify(res)
+            })
+        })
+            .catch(e => {
+                callback(null,{
+                    statusCode: e.statusCode || 500,
+                    body: "Could not get Ingredients" + e
+                })
+            })
+    };
+
+
+
