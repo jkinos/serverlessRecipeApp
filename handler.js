@@ -1,22 +1,4 @@
 const db = require('./db_connect');
-// 'use strict';
-//
-// module.exports.hello = async event => {
-//   return {
-//     statusCode: 200,
-//     body: JSON.stringify(
-//       {
-//         message: 'Go Serverless v1.0! Your function executed successfully!',
-//         input: event,
-//       },
-//       null,
-//       2
-//     ),
-//   };
-
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
-// };
 
 module.exports.getAllRecipes = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
@@ -52,6 +34,7 @@ module.exports.getRecipe = (event, context, callback) => {
             })
         })
 };
+
 module.exports.createRecipe = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
     const data = JSON.parse(event.body);
@@ -69,6 +52,7 @@ module.exports.createRecipe = (event, context, callback) => {
             })
         })
 };
+
 module.exports.updateRecipe = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
     const data = JSON.parse(event.body);
@@ -104,8 +88,6 @@ module.exports.deleteRecipe = (event, context, callback) => {
         })
 };
 
-
-
 module.exports.getAllIngredients = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
     db.getAll('ingredient')
@@ -140,6 +122,7 @@ module.exports.getIngredient = (event, context, callback) => {
             })
         })
 };
+
 module.exports.createIngredient = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
     const data = JSON.parse(event.body);
@@ -157,6 +140,7 @@ module.exports.createIngredient = (event, context, callback) => {
             })
         })
 };
+
 module.exports.updateIngredient = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
     const data = JSON.parse(event.body);
