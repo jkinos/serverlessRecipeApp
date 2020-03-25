@@ -190,7 +190,7 @@ module.exports.getAllIngredientsByRecipeName = (event, context, callback) => {
             .catch(e => {
                 callback(null,{
                     statusCode: e.statusCode || 500,
-                    body: "Could not get Ingredients" + e
+                    body: "Could not get Ingredients " + e
                 })
             })
     };

@@ -92,7 +92,7 @@ functions:
     handler: handler.getAllIngredientsByRecipeName
     events:
       - http:
-          path: recipeIngredients/{name}
+          path: ingredientsByRecipe/{name}
           method: get
           cors: true
 
