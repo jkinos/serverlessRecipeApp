@@ -1,7 +1,7 @@
 
-node_modules
-jspm_packages
+#node_modules
+#jspm_packages
 
 db.js
 
-.serverless
+#.serverless
