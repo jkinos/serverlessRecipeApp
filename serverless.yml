@@ -7,10 +7,31 @@ provider:
   name: aws
   runtime: nodejs12.x
   timeout: 30
+  region: eu-west-1
 
-region: ${opt:region, 'eu-west-1'}
+resources:
+  Resources:
+    GatewayResponseDefault4XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+    GatewayResponseDefault5XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_5XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
 
 functions:
+
 
   getRecipe:
     handler: handler.getRecipe
@@ -19,6 +40,8 @@ functions:
           path: recipes/{id}
           method: get
           cors: true
+
+
   getAllRecipes:
     handler: handler.getAllRecipes
     events:
@@ -26,6 +49,7 @@ functions:
           path: recipes
           method: get
           cors: true
+
   createRecipe:
     handler: handler.createRecipe
     events:
@@ -33,6 +57,15 @@ functions:
           path: recipes
           method: post
           cors: true
+
+  createRecipeAndIngredients:
+    handler: handler.createRecipeAndIngredients
+    events:
+      - http:
+          path: recipes2
+          method: post
+          cors: true
+
   updateRecipe:
     handler: handler.updateRecipe
     events:

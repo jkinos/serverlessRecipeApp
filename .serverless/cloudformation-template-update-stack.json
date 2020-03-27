@@ -74,6 +74,12 @@
         "LogGroupName": "/aws/lambda/recipeappserverless-dev-createRecipe"
       }
     },
+    "CreateRecipeAndIngredientsLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/recipeappserverless-dev-createRecipeAndIngredients"
+      }
+    },
     "UpdateRecipeLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
@@ -249,6 +255,12 @@
                     },
                     {
                       "Fn::GetAtt": [
+                        "CreateRecipeAndIngredientsLogGroup",
+                        "Arn"
+                      ]
+                    },
+                    {
+                      "Fn::GetAtt": [
                         "UpdateRecipeLogGroup",
                         "Arn"
                       ]
@@ -310,7 +322,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/recipeappserverless/dev/1585176640703-2020-03-25T22:50:40.703Z/recipeappserverless.zip"
+          "S3Key": "serverless/recipeappserverless/dev/1585317839496-2020-03-27T14:03:59.496Z/recipeappserverless.zip"
         },
         "FunctionName": "recipeappserverless-dev-getRecipe",
         "Handler": "s_getRecipe.handler",
@@ -329,14 +341,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "GetRecipeLambdaVersionYVA6GIJaFiwkioelgBlMmhpF4FIUsXKJ0W9tB2g2bgw": {
+    "GetRecipeLambdaVersionb9PBxiiJMlwTYS8Cl4xFfKKobk13EQU2zxrRVVI0tw": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetRecipeLambdaFunction"
         },
-        "CodeSha256": "/oUd0VlqBx/M/0YYk0Vq+LDYncueDUKxdep334GJI/I="
+        "CodeSha256": "JVgjaw1HPQT7iKkY6sHvvzolfqF5AG2aFVDszb2HO18="
       }
     },
     "GetAllRecipesLambdaFunction": {
@@ -346,7 +358,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/recipeappserverless/dev/1585176640703-2020-03-25T22:50:40.703Z/recipeappserverless.zip"
+          "S3Key": "serverless/recipeappserverless/dev/1585317839496-2020-03-27T14:03:59.496Z/recipeappserverless.zip"
         },
         "FunctionName": "recipeappserverless-dev-getAllRecipes",
         "Handler": "s_getAllRecipes.handler",
@@ -365,14 +377,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "GetAllRecipesLambdaVersion8ywdkY82hPhYMSXzhbmTmT4B39fnXUzqbNjbwuQ8I": {
+    "GetAllRecipesLambdaVersionlV8xy7yUa1RJho58oD8dDiii63bjlV36vrMknamQmc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetAllRecipesLambdaFunction"
         },
-        "CodeSha256": "/oUd0VlqBx/M/0YYk0Vq+LDYncueDUKxdep334GJI/I="
+        "CodeSha256": "JVgjaw1HPQT7iKkY6sHvvzolfqF5AG2aFVDszb2HO18="
       }
     },
     "CreateRecipeLambdaFunction": {
@@ -382,7 +394,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/recipeappserverless/dev/1585176640703-2020-03-25T22:50:40.703Z/recipeappserverless.zip"
+          "S3Key": "serverless/recipeappserverless/dev/1585317839496-2020-03-27T14:03:59.496Z/recipeappserverless.zip"
         },
         "FunctionName": "recipeappserverless-dev-createRecipe",
         "Handler": "s_createRecipe.handler",
@@ -401,14 +413,50 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "CreateRecipeLambdaVersionaXilhFhGemD6Frh6NubtIh8qZU24Rg60konDAJftg": {
+    "CreateRecipeLambdaVersionTYfgFZp4zMm4S4uTykPEy8mwe0du6aMuVLe1bLNCw": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateRecipeLambdaFunction"
         },
-        "CodeSha256": "/oUd0VlqBx/M/0YYk0Vq+LDYncueDUKxdep334GJI/I="
+        "CodeSha256": "JVgjaw1HPQT7iKkY6sHvvzolfqF5AG2aFVDszb2HO18="
+      }
+    },
+    "CreateRecipeAndIngredientsLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/recipeappserverless/dev/1585317839496-2020-03-27T14:03:59.496Z/recipeappserverless.zip"
+        },
+        "FunctionName": "recipeappserverless-dev-createRecipeAndIngredients",
+        "Handler": "s_createRecipeAndIngredients.handler",
+        "MemorySize": 1024,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs12.x",
+        "Timeout": 30
+      },
+      "DependsOn": [
+        "CreateRecipeAndIngredientsLogGroup",
+        "IamRoleLambdaExecution"
+      ]
+    },
+    "CreateRecipeAndIngredientsLambdaVersionvdmMMAKnPHCLr21Ur8h7RXrEBmfr8vvi6UaB2UHMJU": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "CreateRecipeAndIngredientsLambdaFunction"
+        },
+        "CodeSha256": "JVgjaw1HPQT7iKkY6sHvvzolfqF5AG2aFVDszb2HO18="
       }
     },
     "UpdateRecipeLambdaFunction": {
@@ -418,7 +466,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/recipeappserverless/dev/1585176640703-2020-03-25T22:50:40.703Z/recipeappserverless.zip"
+          "S3Key": "serverless/recipeappserverless/dev/1585317839496-2020-03-27T14:03:59.496Z/recipeappserverless.zip"
         },
         "FunctionName": "recipeappserverless-dev-updateRecipe",
         "Handler": "s_updateRecipe.handler",
@@ -437,14 +485,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "UpdateRecipeLambdaVersion79bhCAtTSVCSmxmHI6eCxwwXhN6k52LrPOlU3bnoEA": {
+    "UpdateRecipeLambdaVersionsHuaZnFSAduzd5XmkjCkvbqBIgB1hwdlIqj8dGfT9Dg": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateRecipeLambdaFunction"
         },
-        "CodeSha256": "/oUd0VlqBx/M/0YYk0Vq+LDYncueDUKxdep334GJI/I="
+        "CodeSha256": "JVgjaw1HPQT7iKkY6sHvvzolfqF5AG2aFVDszb2HO18="
       }
     },
     "DeleteRecipeLambdaFunction": {
@@ -454,7 +502,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/recipeappserverless/dev/1585176640703-2020-03-25T22:50:40.703Z/recipeappserverless.zip"
+          "S3Key": "serverless/recipeappserverless/dev/1585317839496-2020-03-27T14:03:59.496Z/recipeappserverless.zip"
         },
         "FunctionName": "recipeappserverless-dev-deleteRecipe",
         "Handler": "s_deleteRecipe.handler",
@@ -473,14 +521,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "DeleteRecipeLambdaVersioni2LoqOjJ2Is1FTZtfYWcVLuJVCRhIKNSLG0ZrngQw": {
+    "DeleteRecipeLambdaVersion4N5I9UzY6ZFqKvNs4Xfb0K3AqhVVXqmm7sTJA8tcY": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteRecipeLambdaFunction"
         },
-        "CodeSha256": "/oUd0VlqBx/M/0YYk0Vq+LDYncueDUKxdep334GJI/I="
+        "CodeSha256": "JVgjaw1HPQT7iKkY6sHvvzolfqF5AG2aFVDszb2HO18="
       }
     },
     "GetIngredientLambdaFunction": {
@@ -490,7 +538,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/recipeappserverless/dev/1585176640703-2020-03-25T22:50:40.703Z/recipeappserverless.zip"
+          "S3Key": "serverless/recipeappserverless/dev/1585317839496-2020-03-27T14:03:59.496Z/recipeappserverless.zip"
         },
         "FunctionName": "recipeappserverless-dev-getIngredient",
         "Handler": "s_getIngredient.handler",
@@ -509,14 +557,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "GetIngredientLambdaVersion1QinJ0uSLe5jDpOGFwNnEQJGIGCEEtg06EgSoAuls": {
+    "GetIngredientLambdaVersiony6lqTog1MTa33Ep6dMMnt6qnR8YyZYwnBzUwlsvL3Q": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetIngredientLambdaFunction"
         },
-        "CodeSha256": "/oUd0VlqBx/M/0YYk0Vq+LDYncueDUKxdep334GJI/I="
+        "CodeSha256": "JVgjaw1HPQT7iKkY6sHvvzolfqF5AG2aFVDszb2HO18="
       }
     },
     "GetAllIngredientsLambdaFunction": {
@@ -526,7 +574,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/recipeappserverless/dev/1585176640703-2020-03-25T22:50:40.703Z/recipeappserverless.zip"
+          "S3Key": "serverless/recipeappserverless/dev/1585317839496-2020-03-27T14:03:59.496Z/recipeappserverless.zip"
         },
         "FunctionName": "recipeappserverless-dev-getAllIngredients",
         "Handler": "s_getAllIngredients.handler",
@@ -545,14 +593,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "GetAllIngredientsLambdaVersionHo2GxMpGpcCfD7limjPGHVi0m6tKtCMeqLrFddYe3Y": {
+    "GetAllIngredientsLambdaVersionkvYqfKGiAsWsgzJZbM5q0cO7MQQETDd7bn2f0MZKl4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetAllIngredientsLambdaFunction"
         },
-        "CodeSha256": "/oUd0VlqBx/M/0YYk0Vq+LDYncueDUKxdep334GJI/I="
+        "CodeSha256": "JVgjaw1HPQT7iKkY6sHvvzolfqF5AG2aFVDszb2HO18="
       }
     },
     "CreateIngredientLambdaFunction": {
@@ -562,7 +610,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/recipeappserverless/dev/1585176640703-2020-03-25T22:50:40.703Z/recipeappserverless.zip"
+          "S3Key": "serverless/recipeappserverless/dev/1585317839496-2020-03-27T14:03:59.496Z/recipeappserverless.zip"
         },
         "FunctionName": "recipeappserverless-dev-createIngredient",
         "Handler": "s_createIngredient.handler",
@@ -581,14 +629,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "CreateIngredientLambdaVersionRPMOICgtqlmv1A30altrASdbGBA0bK8vmdde53hKvuU": {
+    "CreateIngredientLambdaVersion0Pobz1DToSQ65tsgsm2a8AdBY6NIZjjv1zVkl7FAtM4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "CreateIngredientLambdaFunction"
         },
-        "CodeSha256": "/oUd0VlqBx/M/0YYk0Vq+LDYncueDUKxdep334GJI/I="
+        "CodeSha256": "JVgjaw1HPQT7iKkY6sHvvzolfqF5AG2aFVDszb2HO18="
       }
     },
     "UpdateIngredientLambdaFunction": {
@@ -598,7 +646,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/recipeappserverless/dev/1585176640703-2020-03-25T22:50:40.703Z/recipeappserverless.zip"
+          "S3Key": "serverless/recipeappserverless/dev/1585317839496-2020-03-27T14:03:59.496Z/recipeappserverless.zip"
         },
         "FunctionName": "recipeappserverless-dev-updateIngredient",
         "Handler": "s_updateIngredient.handler",
@@ -617,14 +665,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "UpdateIngredientLambdaVersionRkhAFjwo6MQ5VHhYPQSc02i8fPWEDleqfVEfAL1k": {
+    "UpdateIngredientLambdaVersionfBucYV4Mm2Sv6DgKQl7kvPS0652LmrdPwZVY4zDOyNs": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UpdateIngredientLambdaFunction"
         },
-        "CodeSha256": "/oUd0VlqBx/M/0YYk0Vq+LDYncueDUKxdep334GJI/I="
+        "CodeSha256": "JVgjaw1HPQT7iKkY6sHvvzolfqF5AG2aFVDszb2HO18="
       }
     },
     "DeleteIngredientLambdaFunction": {
@@ -634,7 +682,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/recipeappserverless/dev/1585176640703-2020-03-25T22:50:40.703Z/recipeappserverless.zip"
+          "S3Key": "serverless/recipeappserverless/dev/1585317839496-2020-03-27T14:03:59.496Z/recipeappserverless.zip"
         },
         "FunctionName": "recipeappserverless-dev-deleteIngredient",
         "Handler": "s_deleteIngredient.handler",
@@ -653,14 +701,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "DeleteIngredientLambdaVersionTOstf9jA7K58Z5UisKaqv2bauzmtnclSdxLviM": {
+    "DeleteIngredientLambdaVersiony4NpkXymQ1JEd91tO32ZnMBFMw0ZFNmAKs1s6NicAQo": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "DeleteIngredientLambdaFunction"
         },
-        "CodeSha256": "/oUd0VlqBx/M/0YYk0Vq+LDYncueDUKxdep334GJI/I="
+        "CodeSha256": "JVgjaw1HPQT7iKkY6sHvvzolfqF5AG2aFVDszb2HO18="
       }
     },
     "GetAllIngredientsByRecipeNameLambdaFunction": {
@@ -670,7 +718,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/recipeappserverless/dev/1585176640703-2020-03-25T22:50:40.703Z/recipeappserverless.zip"
+          "S3Key": "serverless/recipeappserverless/dev/1585317839496-2020-03-27T14:03:59.496Z/recipeappserverless.zip"
         },
         "FunctionName": "recipeappserverless-dev-getAllIngredientsByRecipeName",
         "Handler": "s_getAllIngredientsByRecipeName.handler",
@@ -689,14 +737,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "GetAllIngredientsByRecipeNameLambdaVersionA6aylzR0blzJXdwnbK5ORTlhSVEWryBcWES61qPuY": {
+    "GetAllIngredientsByRecipeNameLambdaVersionBWVNOPIVddA9mPPzlJrYP4dLxvybRPSYmhuyAxplE": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetAllIngredientsByRecipeNameLambdaFunction"
         },
-        "CodeSha256": "/oUd0VlqBx/M/0YYk0Vq+LDYncueDUKxdep334GJI/I="
+        "CodeSha256": "JVgjaw1HPQT7iKkY6sHvvzolfqF5AG2aFVDszb2HO18="
       }
     },
     "ApiGatewayRestApi": {
@@ -733,6 +781,21 @@
           "Ref": "ApiGatewayResourceRecipes"
         },
         "PathPart": "{id}",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayResourceRecipes2": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "recipes2",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
@@ -876,6 +939,51 @@
         },
         "ResourceId": {
           "Ref": "ApiGatewayResourceRecipes"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayMethodRecipes2Options": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "ContentHandling": "CONVERT_TO_TEXT",
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+              },
+              "ResponseTemplates": {
+                "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".*\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceRecipes2"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -1135,6 +1243,49 @@
                 {
                   "Fn::GetAtt": [
                     "CreateRecipeLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      }
+    },
+    "ApiGatewayMethodRecipes2Post": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "POST",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceRecipes2"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "CreateRecipeAndIngredientsLambdaFunction",
                     "Arn"
                   ]
                 },
@@ -1490,7 +1641,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1585176630819": {
+    "ApiGatewayDeployment1585317828460": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -1501,12 +1652,14 @@
       "DependsOn": [
         "ApiGatewayMethodRecipesIdVarOptions",
         "ApiGatewayMethodRecipesOptions",
+        "ApiGatewayMethodRecipes2Options",
         "ApiGatewayMethodIngredientsIdVarOptions",
         "ApiGatewayMethodIngredientsOptions",
         "ApiGatewayMethodIngredientsbyrecipeNameVarOptions",
         "ApiGatewayMethodRecipesIdVarGet",
         "ApiGatewayMethodRecipesGet",
         "ApiGatewayMethodRecipesPost",
+        "ApiGatewayMethodRecipes2Post",
         "ApiGatewayMethodRecipesIdVarPut",
         "ApiGatewayMethodRecipesIdVarDelete",
         "ApiGatewayMethodIngredientsIdVarGet",
@@ -1597,6 +1750,43 @@
         "FunctionName": {
           "Fn::GetAtt": [
             "CreateRecipeLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "/*/*"
+            ]
+          ]
+        }
+      }
+    },
+    "CreateRecipeAndIngredientsLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "CreateRecipeAndIngredientsLambdaFunction",
             "Arn"
           ]
         },
@@ -2033,7 +2223,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/recipeappserverless/dev/1585176640703-2020-03-25T22:50:40.703Z/custom-resources.zip"
+          "S3Key": "serverless/recipeappserverless/dev/1585317839496-2020-03-27T14:03:59.496Z/custom-resources.zip"
         },
         "FunctionName": "recipeappserverless-dev-custom-resource-apigw-cw-role",
         "Handler": "apiGatewayCloudWatchRole/handler.handler",
@@ -2050,6 +2240,32 @@
       "DependsOn": [
         "IamRoleCustomResourcesLambdaExecution"
       ]
+    },
+    "GatewayResponseDefault4XX": {
+      "Type": "AWS::ApiGateway::GatewayResponse",
+      "Properties": {
+        "ResponseParameters": {
+          "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
+          "gatewayresponse.header.Access-Control-Allow-Headers": "'*'"
+        },
+        "ResponseType": "DEFAULT_4XX",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "GatewayResponseDefault5XX": {
+      "Type": "AWS::ApiGateway::GatewayResponse",
+      "Properties": {
+        "ResponseParameters": {
+          "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
+          "gatewayresponse.header.Access-Control-Allow-Headers": "'*'"
+        },
+        "ResponseType": "DEFAULT_5XX",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
     },
     "CloudWatchLogsSubscriptionFilterGetRecipeLogGroup": {
       "Type": "AWS::Logs::SubscriptionFilter",
@@ -2078,6 +2294,16 @@
         "FilterPattern": "?\"REPORT RequestId: \" ?\"SERVERLESS_ENTERPRISE\"",
         "LogGroupName": {
           "Ref": "CreateRecipeLogGroup"
+        }
+      }
+    },
+    "CloudWatchLogsSubscriptionFilterCreateRecipeAndIngredientsLogGroup": {
+      "Type": "AWS::Logs::SubscriptionFilter",
+      "Properties": {
+        "DestinationArn": "arn:aws:logs:eu-west-1:802587217904:destination:H2XHp0YGYC1xRHLtSZ#dX2LqcsJ6DqY4gH0Kx#recipeappserverless#dev",
+        "FilterPattern": "?\"REPORT RequestId: \" ?\"SERVERLESS_ENTERPRISE\"",
+        "LogGroupName": {
+          "Ref": "CreateRecipeAndIngredientsLogGroup"
         }
       }
     },
@@ -2189,67 +2415,73 @@
     "GetRecipeLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetRecipeLambdaVersionYVA6GIJaFiwkioelgBlMmhpF4FIUsXKJ0W9tB2g2bgw"
+        "Ref": "GetRecipeLambdaVersionb9PBxiiJMlwTYS8Cl4xFfKKobk13EQU2zxrRVVI0tw"
       }
     },
     "GetAllRecipesLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetAllRecipesLambdaVersion8ywdkY82hPhYMSXzhbmTmT4B39fnXUzqbNjbwuQ8I"
+        "Ref": "GetAllRecipesLambdaVersionlV8xy7yUa1RJho58oD8dDiii63bjlV36vrMknamQmc"
       }
     },
     "CreateRecipeLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateRecipeLambdaVersionaXilhFhGemD6Frh6NubtIh8qZU24Rg60konDAJftg"
+        "Ref": "CreateRecipeLambdaVersionTYfgFZp4zMm4S4uTykPEy8mwe0du6aMuVLe1bLNCw"
+      }
+    },
+    "CreateRecipeAndIngredientsLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "CreateRecipeAndIngredientsLambdaVersionvdmMMAKnPHCLr21Ur8h7RXrEBmfr8vvi6UaB2UHMJU"
       }
     },
     "UpdateRecipeLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateRecipeLambdaVersion79bhCAtTSVCSmxmHI6eCxwwXhN6k52LrPOlU3bnoEA"
+        "Ref": "UpdateRecipeLambdaVersionsHuaZnFSAduzd5XmkjCkvbqBIgB1hwdlIqj8dGfT9Dg"
       }
     },
     "DeleteRecipeLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteRecipeLambdaVersioni2LoqOjJ2Is1FTZtfYWcVLuJVCRhIKNSLG0ZrngQw"
+        "Ref": "DeleteRecipeLambdaVersion4N5I9UzY6ZFqKvNs4Xfb0K3AqhVVXqmm7sTJA8tcY"
       }
     },
     "GetIngredientLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetIngredientLambdaVersion1QinJ0uSLe5jDpOGFwNnEQJGIGCEEtg06EgSoAuls"
+        "Ref": "GetIngredientLambdaVersiony6lqTog1MTa33Ep6dMMnt6qnR8YyZYwnBzUwlsvL3Q"
       }
     },
     "GetAllIngredientsLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetAllIngredientsLambdaVersionHo2GxMpGpcCfD7limjPGHVi0m6tKtCMeqLrFddYe3Y"
+        "Ref": "GetAllIngredientsLambdaVersionkvYqfKGiAsWsgzJZbM5q0cO7MQQETDd7bn2f0MZKl4"
       }
     },
     "CreateIngredientLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "CreateIngredientLambdaVersionRPMOICgtqlmv1A30altrASdbGBA0bK8vmdde53hKvuU"
+        "Ref": "CreateIngredientLambdaVersion0Pobz1DToSQ65tsgsm2a8AdBY6NIZjjv1zVkl7FAtM4"
       }
     },
     "UpdateIngredientLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UpdateIngredientLambdaVersionRkhAFjwo6MQ5VHhYPQSc02i8fPWEDleqfVEfAL1k"
+        "Ref": "UpdateIngredientLambdaVersionfBucYV4Mm2Sv6DgKQl7kvPS0652LmrdPwZVY4zDOyNs"
       }
     },
     "DeleteIngredientLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "DeleteIngredientLambdaVersionTOstf9jA7K58Z5UisKaqv2bauzmtnclSdxLviM"
+        "Ref": "DeleteIngredientLambdaVersiony4NpkXymQ1JEd91tO32ZnMBFMw0ZFNmAKs1s6NicAQo"
       }
     },
     "GetAllIngredientsByRecipeNameLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetAllIngredientsByRecipeNameLambdaVersionA6aylzR0blzJXdwnbK5ORTlhSVEWryBcWES61qPuY"
+        "Ref": "GetAllIngredientsByRecipeNameLambdaVersionBWVNOPIVddA9mPPzlJrYP4dLxvybRPSYmhuyAxplE"
       }
     },
     "ServiceEndpoint": {

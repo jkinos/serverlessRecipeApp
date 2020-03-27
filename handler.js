@@ -6,6 +6,9 @@ module.exports.getAllRecipes = (event, context, callback) => {
         .then(res => {
             callback(null, {
                 statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
                 body: JSON.stringify(res)
             })
         })
@@ -24,6 +27,9 @@ module.exports.getRecipe = (event, context, callback) => {
         .then(res => {
             callback(null,{
                 statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
                 body: JSON.stringify(res)
             })
         })
@@ -37,11 +43,14 @@ module.exports.getRecipe = (event, context, callback) => {
 
 module.exports.createRecipe = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
-    const data = JSON.parse(event.body);
+    const data = (event);
     db.insert('recipe', data)
         .then(res => {
             callback(null,{
                 statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
                 body: "Recipe Created!" + res
             })
         })
@@ -60,6 +69,9 @@ module.exports.updateRecipe = (event, context, callback) => {
         .then(res => {
             callback(null,{
                 statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
                 body: "Recipe Updated!" + res
             })
         })
@@ -77,6 +89,9 @@ module.exports.deleteRecipe = (event, context, callback) => {
         .then(res => {
             callback(null,{
                 statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
                 body: "Recipe Deleted!"
             })
         })
@@ -94,6 +109,9 @@ module.exports.getAllIngredients = (event, context, callback) => {
         .then(res => {
             callback(null, {
                 statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
                 body: JSON.stringify(res)
             })
         })
@@ -112,6 +130,9 @@ module.exports.getIngredient = (event, context, callback) => {
         .then(res => {
             callback(null,{
                 statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
                 body: JSON.stringify(res)
             })
         })
@@ -125,11 +146,14 @@ module.exports.getIngredient = (event, context, callback) => {
 
 module.exports.createIngredient = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
-    const data = JSON.parse(event.body);
+    const data = (event);
     db.insert('ingredient', data)
         .then(res => {
             callback(null,{
                 statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
                 body: "Ingredient Created!" + res
             })
         })
@@ -143,11 +167,14 @@ module.exports.createIngredient = (event, context, callback) => {
 
 module.exports.updateIngredient = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
-    const data = JSON.parse(event.body);
+    const data = (event);
     db.updateById('ingredient', event.pathParameters.id, data)
         .then(res => {
             callback(null,{
                 statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
                 body: "Ingredient Updated!" + res
             })
         })
@@ -165,6 +192,9 @@ module.exports.deleteIngredient = (event, context, callback) => {
         .then(res => {
             callback(null,{
                 statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
                 body: "Ingredient Deleted!"
             })
         })
@@ -184,6 +214,9 @@ module.exports.getAllIngredientsByRecipeName = (event, context, callback) => {
         .then(res => {
             callback(null, {
                 statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
                 body: JSON.stringify(res)
             })
         })
@@ -195,5 +228,43 @@ module.exports.getAllIngredientsByRecipeName = (event, context, callback) => {
             })
     };
 
+module.exports.createRecipeAndIngredients = async (event, context, callback) => {
+    context.callbackWaitsForEmptyEventLoop = false;
+    const data1 = (event.name, event.cooking_time, event.portions, event.link, event.image,event.instructions);
 
-
+    db.insert('recipe', data1)
+        .then(res => {
+            callback(null,{
+                statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
+                body: "Recipe Created!" + res
+            })
+        })
+        .catch(e => {
+            callback(null,{
+                statusCode: e.statusCode || 500,
+                body: "Could not create Recipe " + e
+            })
+        })
+    const data2 = (event.ingredients)
+    const sql = 'insert into ingredient (name,amount,unit,recipe_name) values ($1,$2,$3,$4)';
+    await (data2.map (async (ingredient=>
+        db.query('sql', ingredient, event.name)
+        .then(res => {
+            callback(null,{
+                statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
+                body: "Ingredients Created!" + res
+            })
+        })
+        .catch(e => {
+            callback(null,{
+                statusCode: e.statusCode || 500,
+                body: "Could not create Ingredient " + ingredient + e
+            })
+        }))))
+};
