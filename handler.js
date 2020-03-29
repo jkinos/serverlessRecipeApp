@@ -41,26 +41,26 @@ module.exports.getRecipe = (event, context, callback) => {
         })
 };
 
-module.exports.createRecipe = (event, context, callback) => {
-    context.callbackWaitsForEmptyEventLoop = false;
-    const data = (event);
-    db.insert('recipe', data)
-        .then(res => {
-            callback(null,{
-                statusCode: 200,
-                headers: {
-                    'Access-Control-Allow-Origin': '*'
-                },
-                body: "Recipe Created!" + res
-            })
-        })
-        .catch(e => {
-            callback(null,{
-                statusCode: e.statusCode || 500,
-                body: "Could not create Recipe " + e
-            })
-        })
-};
+// module.exports.createRecipe = (event, context, callback) => {
+//     context.callbackWaitsForEmptyEventLoop = false;
+//     const data = (event);
+//     db.insert('recipe', data)
+//         .then(res => {
+//             callback(null,{
+//                 statusCode: 200,
+//                 headers: {
+//                     'Access-Control-Allow-Origin': '*'
+//                 },
+//                 body: "Recipe Created!" + res
+//             })
+//         })
+//         .catch(e => {
+//             callback(null,{
+//                 statusCode: e.statusCode || 500,
+//                 body: "Could not create Recipe " + e
+//             })
+//         })
+// };
 
 module.exports.updateRecipe = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
@@ -230,41 +230,54 @@ module.exports.getAllIngredientsByRecipeName = (event, context, callback) => {
 
 module.exports.createRecipeAndIngredients = async (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
-    const data1 = (event.name, event.cooking_time, event.portions, event.link, event.image,event.instructions);
 
-    db.insert('recipe', data1)
+    let params=JSON.parse(event.body)
+    const recipeSQL = 'insert into recipe (name,cooking_time,portions,link,image,instruction) values ($1,$2,$3,$4,$5,$6)'
+    const ingredients = params.ingredients
+    const ingredientsSQL = 'insert into ingredient (name,amount,unit,recipe_name) values ($1,$2,$3,$4)'
+
+    await db.query(recipeSQL,params.name,params.cooking_time,params.portions,params.link,params.image,params.instructions)
+    await Promise.all(ingredients.map ( i =>
+       db.query(ingredientsSQL, i.iname,i.amount,i.unit, params.name)))
         .then(res => {
             callback(null,{
                 statusCode: 200,
                 headers: {
                     'Access-Control-Allow-Origin': '*'
                 },
-                body: "Recipe Created!" + res
+                body: "The whole god damn recipe created!" + res
             })
         })
         .catch(e => {
             callback(null,{
                 statusCode: e.statusCode || 500,
-                body: "Could not create Recipe " + e
+                body: `Could not create recipe ` + e
             })
         })
-    const data2 = (event.ingredients)
-    const sql = 'insert into ingredient (name,amount,unit,recipe_name) values ($1,$2,$3,$4)';
-    await (data2.map (async (ingredient=>
-        db.query('sql', ingredient, event.name)
-        .then(res => {
-            callback(null,{
-                statusCode: 200,
-                headers: {
-                    'Access-Control-Allow-Origin': '*'
-                },
-                body: "Ingredients Created!" + res
-            })
-        })
-        .catch(e => {
-            callback(null,{
-                statusCode: e.statusCode || 500,
-                body: "Could not create Ingredient " + ingredient + e
-            })
-        }))))
 };
+
+
+// var AWS = require('aws-sdk');
+// const uuid = require('lambda-uuid')
+//
+// module.exports.requestUploadURL = (event, context, callback) => {
+//     const s3 = new AWS.S3();
+//     const params = JSON.parse(event.body);
+//
+//     const s3Params = {
+//         Bucket: 'recipe-app-photo-storage',
+//         Key:  uuid(),
+//         ContentType: params.fileType,
+//         ACL: 'public-read',
+//     };
+//
+//     const uploadURL = s3.getSignedUrl('putObject', s3Params);
+//
+//     callback(null, {
+//         statusCode: 200,
+//         headers: {
+//             'Access-Control-Allow-Origin': '*'
+//         },
+//         body: JSON.stringify({ uploadURL: uploadURL }),
+//     })
+// }

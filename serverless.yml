@@ -1,13 +1,17 @@
 service: recipeappserverless
 
-app: recipeappserverless-app
-org: jennakinos
 
 provider:
   name: aws
   runtime: nodejs12.x
   timeout: 30
   region: eu-west-1
+#  iamRoleStatements:
+#    - Effect: "Allow"
+#      Action:
+#        - "s3:*"
+#      Resource: "arn:aws:s3:::recipe-app-photo-storage/*"
+
 
 resources:
   Resources:
@@ -29,6 +33,23 @@ resources:
         ResponseType: DEFAULT_5XX
         RestApiId:
           Ref: 'ApiGatewayRestApi'
+#    UploadBucket:
+#      Type: AWS::S3::Bucket
+#      Properties:
+#        BucketName: recipe-app-photo-storage
+#        AccessControl: PublicRead
+#        CorsConfiguration:
+#          CorsRules:
+#            - AllowedMethods:
+#                - GET
+#                - PUT
+#                - POST
+#                - HEAD
+#              AllowedOrigins:
+#                - "*"
+#              AllowedHeaders:
+#                - "*"
+
 
 functions:
 
@@ -50,19 +71,19 @@ functions:
           method: get
           cors: true
 
-  createRecipe:
-    handler: handler.createRecipe
-    events:
-      - http:
-          path: recipes
-          method: post
-          cors: true
+#  createRecipe:
+#    handler: handler.createRecipe
+#    events:
+#      - http:
+#          path: recipes
+#          method: post
+#          cors: true
 
   createRecipeAndIngredients:
     handler: handler.createRecipeAndIngredients
     events:
       - http:
-          path: recipes2
+          path: recipes
           method: post
           cors: true
 
@@ -129,9 +150,19 @@ functions:
           method: get
           cors: true
 
+#  requestUploadURL:
+#    handler: handler.requestUploadURL
+#    events:
+#      - http:
+#          path: requestUploadURL
+#          method: post
+#          cors: true
+
+
 
 
 
 plugins:
   - serverless-offline
+
 
