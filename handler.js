@@ -193,7 +193,7 @@ module.exports.deleteIngredient = (event, context, callback) => {
             callback(null,{
                 statusCode: 200,
                 headers: {
-                    'Access-Control-Allow-Origin': '*'
+                    'Access-Control-Allow-Origin': '*',
                 },
                 body: "Ingredient Deleted!"
             })
@@ -236,7 +236,7 @@ module.exports.createRecipeAndIngredients = async (event, context, callback) => 
     const ingredients = params.ingredients
     const ingredientsSQL = 'insert into ingredient (name,amount,unit,recipe_name) values ($1,$2,$3,$4)'
 
-    await db.query(recipeSQL,params.name,params.cooking_time,params.portions,params.link,params.image,params.instructions)
+    await db.query(recipeSQL,params.name,params.cooking_time,params.portions,params.link,params.image,params.instruction)
     await Promise.all(ingredients.map ( i =>
        db.query(ingredientsSQL, i.iname,i.amount,i.unit, params.name)))
         .then(res => {
@@ -251,7 +251,11 @@ module.exports.createRecipeAndIngredients = async (event, context, callback) => 
         .catch(e => {
             callback(null,{
                 statusCode: e.statusCode || 500,
-                body: `Could not create recipe ` + e
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
+                body: "Could not create recipe " + e.message()
+
             })
         })
 };
