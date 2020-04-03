@@ -40,7 +40,7 @@ module.exports.getRecipe = (event, context, callback) => {
             })
         })
 };
-
+//Tämä ei tullut käyttöön lopullisessa versiossa
 // module.exports.createRecipe = (event, context, callback) => {
 //     context.callbackWaitsForEmptyEventLoop = false;
 //     const data = (event);
@@ -210,7 +210,7 @@ module.exports.getAllIngredientsByRecipeName = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
 
     const sql = 'select * from ingredient where recipe_name=$1';
-    db.query(sql,event.pathParameters.name)
+    db.query(sql,decodeURI(event.pathParameters.name))
         .then(res => {
             callback(null, {
                 statusCode: 200,
@@ -251,15 +251,173 @@ module.exports.createRecipeAndIngredients = async (event, context, callback) => 
         .catch(e => {
             callback(null,{
                 statusCode: e.statusCode || 500,
+                body: "Could not create recipe " + e.message(),
                 headers: {
                     'Access-Control-Allow-Origin': '*'
-                },
-                body: "Could not create recipe " + e.message()
-
+                }
             })
         })
 };
 
+
+
+
+
+
+module.exports.getShoppingList = (event, context, callback) => {
+    context.callbackWaitsForEmptyEventLoop = false;
+    db.getAll('shopping_list')
+        .then(res => {
+            callback(null, {
+                statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
+                body: JSON.stringify(res)
+            })
+        })
+        .catch(e => {
+            console.log(e);
+            callback(null, {
+                statusCode: e.statusCode || 500,
+                body: 'Error: Could not find shopping list! : ' + e
+            })
+        })
+};
+
+
+module.exports.getShoppingListItem = (event, context, callback) => {
+    context.callbackWaitsForEmptyEventLoop = false;
+    db.getById('shopping_list', event.pathParameters.id)
+        .then(res => {
+            callback(null,{
+                statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
+                body: JSON.stringify(res)
+            })
+        })
+        .catch(e => {
+            callback(null,{
+                statusCode: e.statusCode || 500,
+                body: "Could not find shopping list item: " + e
+            })
+        })
+};
+
+module.exports.createShoppingListItem = (event, context, callback) => {
+    context.callbackWaitsForEmptyEventLoop = false;
+    const data = JSON.parse(event.body);
+    db.insert('shopping_list', data)
+        .then(res => {
+            callback(null,{
+                statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
+                body: "Shopping List Item Created!" + res
+            })
+        })
+        .catch(e => {
+            callback(null,{
+                statusCode: e.statusCode || 500,
+                body: "Could not create Item " + e
+            })
+        })
+};
+
+module.exports.createShoppingListItems = async (event, context, callback) => {
+    context.callbackWaitsForEmptyEventLoop = false;
+
+    let params=JSON.parse(event.body)
+    const items = params.selected
+    const SQL = 'insert into shopping_list (name) values ($1)'
+
+    await Promise.all(items.map ( item =>
+        db.query(SQL, item)))
+        .then(res => {
+            callback(null,{
+                statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
+                body: "Item added to shopping list! " + res
+            })
+        })
+        .catch(e => {
+            callback(null,{
+                statusCode: e.statusCode || 500,
+                body: "Could not create recipe " + e.message(),
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
+        })
+};
+
+
+module.exports.updateShoppingListItem = (event, context, callback) => {
+    context.callbackWaitsForEmptyEventLoop = false;
+    const data = (event);
+    db.updateById('shopping_list', event.pathParameters.id, data)
+        .then(res => {
+            callback(null,{
+                statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
+                body: "Shopping List Updated!" + res
+            })
+        })
+        .catch(e => {
+            callback(null,{
+                statusCode: e.statusCode || 500,
+                body: "Could not update shopping List" + e
+            })
+        })
+};
+
+module.exports.deleteShoppingListItem = (event, context, callback) => {
+    context.callbackWaitsForEmptyEventLoop = false;
+    db.deleteById('shopping_list', event.pathParameters.id)
+        .then(res => {
+            callback(null,{
+                statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                },
+                body: "Shopping List Item Deleted!"
+            })
+        })
+        .catch(e => {
+            callback(null,{
+                statusCode: e.statusCode || 500,
+                body: "Could not delete Item" + e
+            })
+        })
+};
+
+module.exports.deleteShoppingList = (event, context, callback) => {
+    context.callbackWaitsForEmptyEventLoop = false;
+    const data = JSON.parse(event.body);
+    db.deleteAll('shopping_list')
+        .then(res => {
+            callback(null,{
+                statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                },
+                body: "Shopping List succesfully deleted!" + res
+            })
+        })
+        .catch(e => {
+            callback(null,{
+                statusCode: e.statusCode || 500,
+                body: "Could not delete Shopping list " + e
+            })
+        })
+};
 
 // var AWS = require('aws-sdk');
 // const uuid = require('lambda-uuid')

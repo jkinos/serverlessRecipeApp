@@ -7,7 +7,6 @@
       <change beforePath="$PROJECT_DIR$/.serverless/recipeappserverless.zip" beforeDir="false" afterPath="$PROJECT_DIR$/.serverless/recipeappserverless.zip" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.serverless/serverless-state.json" beforeDir="false" afterPath="$PROJECT_DIR$/.serverless/serverless-state.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handler.js" beforeDir="false" afterPath="$PROJECT_DIR$/handler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/serverless.yml" beforeDir="false" afterPath="$PROJECT_DIR$/serverless.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,7 +36,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../recipes" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../recipeAppServerlessInfra" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -73,7 +72,7 @@
       <workItem from="1585299164565" duration="10930000" />
       <workItem from="1585338636900" duration="25906000" />
       <workItem from="1585440093163" duration="27463000" />
-      <workItem from="1585512901228" duration="10836000" />
+      <workItem from="1585512901228" duration="44226000" />
     </task>
     <servers />
   </component>
@@ -85,18 +84,18 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="499" y="182" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.864@0.0.1536.864" timestamp="1585403007411" />
-    <state x="549" y="190" key="FileChooserDialogImpl" timestamp="1585561452208">
+    <state x="549" y="190" key="FileChooserDialogImpl" timestamp="1585682922279">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="549" y="190" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1585561452208" />
+    <state x="549" y="190" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1585682922279" />
     <state x="477" y="259" key="com.intellij.ide.util.TipDialog" timestamp="1585235056073">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="477" y="259" key="com.intellij.ide.util.TipDialog/0.0.1536.864@0.0.1536.864" timestamp="1585235056073" />
-    <state x="209" y="140" key="new project wizard" timestamp="1585487977121">
+    <state x="209" y="140" key="new project wizard" timestamp="1585730968853">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="209" y="140" key="new project wizard/0.0.1536.864@0.0.1536.864" timestamp="1585487977121" />
+    <state x="209" y="140" key="new project wizard/0.0.1536.864@0.0.1536.864" timestamp="1585730968853" />
     <state x="410" y="158" width="700" height="530" key="recent.locations.popup" timestamp="1585169262257">
       <screen x="0" y="0" width="1536" height="864" />
     </state>

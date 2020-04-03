@@ -94,6 +94,7 @@ functions:
           path: recipes/{id}
           method: put
           cors: true
+
   deleteRecipe:
     handler: handler.deleteRecipe
     events:
@@ -149,6 +150,70 @@ functions:
           path: ingredientsByRecipe/{name}
           method: get
           cors: true
+
+  getShoppingListItem:
+    handler: handler.getShoppingListItem
+    events:
+      - http:
+          path: shoppingList/{id}
+          method: get
+          cors: true
+
+  getShoppingList:
+    handler: handler.getShoppingList
+    events:
+      - http:
+          path: shoppingList
+          method: get
+          cors: true
+  createShoppingListItem:
+    handler: handler.createShoppingListItem
+    events:
+      - http:
+          path: shoppingListItem
+          method: post
+          cors: true
+  createShoppingListItems:
+    handler: handler.createShoppingListItems
+    events:
+      - http:
+          path: shoppingList
+          method: post
+          cors: true
+  updateShoppingListItem:
+    handler: handler.updateShoppingListItem
+    events:
+      - http:
+          path: shoppingList/{id}
+          method: put
+          cors: true
+
+  deleteShoppingListItem:
+    handler: handler.deleteShoppingListItem
+    events:
+      - http:
+          path: shoppingList/{id}
+          method: delete
+          cors: true
+  deleteShoppingList:
+    handler: handler.deleteShoppingList
+    events:
+      - http:
+          path: shoppingList
+          method: delete
+          cors: true
+
+
+
+
+
+
+
+
+
+
+
+
 
 #  requestUploadURL:
 #    handler: handler.requestUploadURL
