@@ -50,7 +50,6 @@ resources:
 #              AllowedHeaders:
 #                - "*"
 
-
 functions:
 
   getRecipe:
