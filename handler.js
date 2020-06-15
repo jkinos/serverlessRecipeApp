@@ -259,11 +259,6 @@ module.exports.createRecipeAndIngredients = async (event, context, callback) => 
         })
 };
 
-
-
-
-
-
 module.exports.getShoppingList = (event, context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
     db.getAll('shopping_list')
